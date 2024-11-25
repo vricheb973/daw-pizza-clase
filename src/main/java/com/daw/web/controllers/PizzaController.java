@@ -96,8 +96,14 @@ public class PizzaController {
 		return ResponseEntity.notFound().build();
 	}
 	
-	
-	
+	@PutMapping("/{idPizza}/disponible")
+	public ResponseEntity<Pizza> marcarDesmarcarDisponible(@PathVariable int idPizza){
+		if(this.pizzaService.existsPizza(idPizza)) {
+			return ResponseEntity.ok(this.pizzaService.marcarDesmarcarDisponible(idPizza));
+		}
+		
+		return ResponseEntity.notFound().build();
+	}
 	
 	
 	

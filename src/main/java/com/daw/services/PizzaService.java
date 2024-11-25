@@ -71,6 +71,34 @@ public class PizzaService {
 		return pizza;
 	}
 	
+	public Pizza marcarDesmarcarDisponible(int idPizza) {
+		Pizza pizza = this.pizzaRepository.findById(idPizza).get();
+		
+		if(pizza.getDisponible()) {
+			pizza.setDisponible(false);
+		}
+		else {
+			pizza.setDisponible(true);
+		}
+		
+		pizza = this.pizzaRepository.save(pizza);
+		
+		return pizza;
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	
 	
