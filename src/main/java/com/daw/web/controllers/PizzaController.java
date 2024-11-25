@@ -87,4 +87,31 @@ public class PizzaController {
 		return ResponseEntity.ok(this.pizzaService.getSinIngrediente(ingrediente));
 	}
 	
+	@PutMapping("/{idPizza}/precio")
+	public ResponseEntity<Pizza> actualizarPrecio(@PathVariable int idPizza, @RequestParam double nuevoPrecio){
+		if(this.pizzaService.existsPizza(idPizza)) {
+			return ResponseEntity.ok(this.pizzaService.actualizarPrecio(idPizza, nuevoPrecio));
+		}
+		
+		return ResponseEntity.notFound().build();
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 }

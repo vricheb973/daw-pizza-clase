@@ -51,7 +51,7 @@ public class PizzaService {
 	}
 	
 	public List<Pizza> getByNombre(String nombre) {
-		return this.pizzaRepository.findByNombreStartingWith(nombre);
+		return this.pizzaRepository.findByDisponibleTrueAndNombreStartingWith(nombre);
 	}
 	
 	public List<Pizza> getIngrediente(String ingrediente) {
@@ -61,5 +61,21 @@ public class PizzaService {
 	public List<Pizza> getSinIngrediente(String ingrediente) {
 		return this.pizzaRepository.findByDescripcionNotContaining(ingrediente);
 	}
+	
+	public Pizza actualizarPrecio(int idPizza, double nuevoPrecio) {
+		Pizza pizza = this.pizzaRepository.findById(idPizza).get();
+			
+		pizza.setPrecio(nuevoPrecio);
+		pizza = this.pizzaRepository.save(pizza);
+		
+		return pizza;
+	}
+	
+	
+	
+	
+	
+	
+	
 	
 }
