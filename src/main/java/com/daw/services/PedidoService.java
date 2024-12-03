@@ -1,14 +1,16 @@
 package com.daw.services;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.daw.persistence.entities.Pedido;
 import com.daw.persistence.repositories.PedidoRepository;
+import com.daw.services.dtos.PedidoDTO;
+import com.daw.services.mappers.PedidoMapper;
 
 @Service
 public class PedidoService {
@@ -17,12 +19,18 @@ public class PedidoService {
 	private PedidoRepository pedidoRepository;
 	
 	//CRUDs
-	public List<Pedido> findAll(){
-		return this.pedidoRepository.findAll();
+	public List<PedidoDTO> findAll(){
+		List<PedidoDTO> pedidosDTO = new ArrayList<PedidoDTO>();
+		
+		for(Pedido p : this.pedidoRepository.findAll()) {
+			pedidosDTO.add(PedidoMapper.toDto(p));
+		}
+
+		return pedidosDTO;
 	}
 	
-	public Optional<Pedido> findById(int idPedido){
-		return this.pedidoRepository.findById(idPedido);
+	public PedidoDTO findById(int idPedido){
+		return PedidoMapper.toDto(this.pedidoRepository.findById(idPedido).get());
 	}
 	
 	public boolean existsPedido(int idPedido){
