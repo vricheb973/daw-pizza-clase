@@ -7,8 +7,11 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.daw.persistence.entities.Pedido;
+import com.daw.persistence.entities.Pizza;
 import com.daw.persistence.entities.PizzaPedido;
 import com.daw.persistence.repositories.PizzaPedidoRepository;
+import com.daw.services.dtos.PizzaPedidoInputDTO;
 import com.daw.services.dtos.PizzaPedidoOutputDTO;
 import com.daw.services.mappers.PizzaPedidoMapper;
 
@@ -17,6 +20,9 @@ public class PizzaPedidoService {
 	
 	@Autowired
 	private PizzaPedidoRepository pizzaPedidoRepository;	
+	
+	@Autowired
+	private PizzaService pizzaService;
 
 	//CRUDs simples
 	public List<PizzaPedido> findAll(){
@@ -63,19 +69,29 @@ public class PizzaPedidoService {
 		return dtos;
 	}
 	
+	public PizzaPedidoOutputDTO findDTO(int idPizza) {
+		PizzaPedido pp = this.pizzaPedidoRepository.findById(idPizza).get();
+		
+		return PizzaPedidoMapper.toDTO(pp);
+	}
+	
+	public PizzaPedidoOutputDTO save(PizzaPedidoInputDTO inputDTO) {
+		PizzaPedido entity = PizzaPedidoMapper.toEntity(inputDTO);
+		
+		Pizza pizza = this.pizzaService.findById(entity.getIdPizza()).get();
+		entity.setPrecio(entity.getCantidad() * pizza.getPrecio());
+		
+		entity = this.pizzaPedidoRepository.save(entity);
+		
+		//Añadimos la pizza que viene a nula cuando hacemos el save() para que no de NullPointer en el Mapper
+		entity.setPizza(pizza);		
+		
+		return PizzaPedidoMapper.toDTO(entity);
+	}
 	
 	
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+		
 	
 	
 	
