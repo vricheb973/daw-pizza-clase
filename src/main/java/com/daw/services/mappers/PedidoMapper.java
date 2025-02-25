@@ -24,7 +24,6 @@ public class PedidoMapper {
 		//Vienen del Cliente asociado al Pedido
 		dto.setCliente(pedido.getCliente().getNombre());
 		dto.setTelefono(pedido.getCliente().getTelefono());
-		dto.setDireccion(pedido.getCliente().getDireccion());
 		
 		List<PizzaPedidoOutputDTO> pizzas = new ArrayList<PizzaPedidoOutputDTO>();
 		

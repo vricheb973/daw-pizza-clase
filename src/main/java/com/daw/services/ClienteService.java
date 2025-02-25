@@ -8,6 +8,8 @@ import org.springframework.stereotype.Service;
 
 import com.daw.persistence.entities.Cliente;
 import com.daw.persistence.repositories.ClienteRepository;
+import com.daw.services.dtos.ClienteDTO;
+import com.daw.services.mappers.ClienteMapper;
 
 @Service
 public class ClienteService {
@@ -24,8 +26,12 @@ public class ClienteService {
 		return this.clienteRepository.existsById(idCliente);
 	}
 	
-	public Optional<Cliente> findById(int idCliente){
+	public Optional<Cliente> findEntityById(int idCliente){
 		return this.clienteRepository.findById(idCliente);
+	}
+	
+	public ClienteDTO findById(int idCliente){
+		return ClienteMapper.toDto(this.clienteRepository.findById(idCliente).get());
 	}
 	
 	public Cliente create(Cliente cliente) {

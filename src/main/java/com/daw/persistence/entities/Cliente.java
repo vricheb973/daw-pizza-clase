@@ -30,9 +30,6 @@ public class Cliente {
 	@Column(length = 30, nullable = false)
 	private String nombre;
 	
-	@Column(length = 100, nullable = false)
-	private String direccion;
-	
 	@Column(length = 50, nullable = false, unique = true)
 	private String email;
 	
@@ -42,5 +39,9 @@ public class Cliente {
 	@OneToMany(mappedBy = "cliente", fetch = FetchType.LAZY)
 	@JsonIgnore
 	private List<Pedido> pedidos;
+	
+	@OneToMany(mappedBy = "cliente", fetch = FetchType.LAZY)
+	@JsonIgnore
+	private List<Direccion> direcciones;
 
 }

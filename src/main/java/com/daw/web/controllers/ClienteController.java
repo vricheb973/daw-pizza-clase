@@ -1,7 +1,6 @@
 package com.daw.web.controllers;
 
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -18,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.daw.persistence.entities.Cliente;
 import com.daw.services.ClienteService;
+import com.daw.services.dtos.ClienteDTO;
 
 
 @RestController
@@ -33,13 +33,14 @@ public class ClienteController {
 	}
 	
 	@GetMapping("/{idCliente}")
-	public ResponseEntity<Cliente> findById(@PathVariable int idCliente) {
-		Optional<Cliente> cliente = this.clienteService.findById(idCliente);
-		if(cliente.isEmpty()) {
+	public ResponseEntity<ClienteDTO> findById(@PathVariable int idCliente) {
+		if(!this.clienteService.existsCliente(idCliente)) {
 			return ResponseEntity.notFound().build();
 		}
 		
-		return ResponseEntity.ok(cliente.get());
+		ClienteDTO cliente = this.clienteService.findById(idCliente);
+		
+		return ResponseEntity.ok(cliente);
 	}
 	
 	@PostMapping

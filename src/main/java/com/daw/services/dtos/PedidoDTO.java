@@ -18,7 +18,6 @@ public class PedidoDTO {
 	private String metodo;
 	private String cliente;
 	private String telefono;
-	private String direccion;
 	private String notas;
 	private List<PizzaPedidoOutputDTO> pizzas;
 

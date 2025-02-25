@@ -57,7 +57,7 @@ public class PedidoService {
 		
 		pedido = this.pedidoRepository.save(pedido);
 		
-		pedido.setCliente(this.clienteService.findById(pedido.getIdCliente()).get());
+		pedido.setCliente(this.clienteService.findEntityById(pedido.getIdCliente()).get());
 		pedido.setPizzaPedidos(new ArrayList<PizzaPedido>());
 		
 		return PedidoMapper.toDto(pedido);
