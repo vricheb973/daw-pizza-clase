@@ -64,7 +64,7 @@ public class PedidoController {
 	}
 	
 	@PutMapping("/{idPedido}")
-	public ResponseEntity<Pedido> update(@PathVariable int idPedido, @RequestBody Pedido pedido){
+	public ResponseEntity<PedidoDTO> update(@PathVariable int idPedido, @RequestBody Pedido pedido){
 		if(idPedido != pedido.getId()) {
 			return ResponseEntity.badRequest().build();
 		}
@@ -76,7 +76,7 @@ public class PedidoController {
 	}
 	
 	@DeleteMapping("/{idPedido}")
-	public ResponseEntity<Pedido> delete(@PathVariable int idPedido){
+	public ResponseEntity<PedidoDTO> delete(@PathVariable int idPedido){
 		if(this.pedidoService.delete(idPedido)) {
 			return ResponseEntity.ok().build();
 		}
@@ -147,9 +147,31 @@ public class PedidoController {
 		return ResponseEntity.notFound().build();
 	}
 	
+	//Query methods
+	@GetMapping("/domicilio")
+	public ResponseEntity<List<PedidoDTO>> listDomicilio(){
+		return ResponseEntity.ok(this.pedidoService.getPedidosDomicilio());
+	}
+
+	@GetMapping("/llevar")
+	public ResponseEntity<List<PedidoDTO>> listLlevar(){
+		return ResponseEntity.ok(this.pedidoService.getPedidosLlevar());
+	}
 	
+	@GetMapping("/local")
+	public ResponseEntity<List<PedidoDTO>> listLocal(){
+		return ResponseEntity.ok(this.pedidoService.getPedidosLocal());
+	}
 	
+	@GetMapping("/hoy")
+	public ResponseEntity<List<PedidoDTO>> listHoy(){
+		return ResponseEntity.ok(this.pedidoService.getPedidosHoy());
+	}
 	
+	@GetMapping("/cliente/{idCliente}")
+	public ResponseEntity<List<PedidoDTO>> listByCliente(@PathVariable int idCliente){
+		return ResponseEntity.ok(this.pedidoService.getByCliente(idCliente));
+	}
 	
 	
 	

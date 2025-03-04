@@ -74,4 +74,12 @@ public class ClienteController {
 		return ResponseEntity.ok(this.clienteService.getByTelefono(telefono));
 	}
 	
+	
+	
+	
+	
+	
+	
+	
+	
 }
