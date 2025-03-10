@@ -32,7 +32,7 @@ public class PizzaController {
 	}
 	
 	@GetMapping("/{idPizza}")
-	public ResponseEntity<Pizza> findById(@RequestParam int idPizza) {
+	public ResponseEntity<Pizza> findById(@PathVariable int idPizza) {
 		Optional<Pizza> pizza = this.pizzaService.findById(idPizza);
 		if(pizza.isEmpty()) {
 			return ResponseEntity.notFound().build();
