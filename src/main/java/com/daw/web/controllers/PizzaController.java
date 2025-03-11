@@ -1,7 +1,6 @@
 package com.daw.web.controllers;
 
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -18,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.daw.persistence.entities.Pizza;
 import com.daw.services.PizzaService;
+import com.daw.services.dtos.PizzaDTO;
 
 @RestController
 @RequestMapping("/pizzas")
@@ -31,14 +31,23 @@ public class PizzaController {
 		return ResponseEntity.ok(this.pizzaService.findAll());
 	}
 	
+//	@GetMapping("/{idPizza}")
+//	public ResponseEntity<Pizza> findById(@PathVariable int idPizza) {
+//		Optional<Pizza> pizza = this.pizzaService.findById(idPizza);
+//		if(pizza.isEmpty()) {
+//			return ResponseEntity.notFound().build();
+//		}
+//		
+//		return ResponseEntity.ok(pizza.get());
+//	}
+
 	@GetMapping("/{idPizza}")
-	public ResponseEntity<Pizza> findById(@PathVariable int idPizza) {
-		Optional<Pizza> pizza = this.pizzaService.findById(idPizza);
-		if(pizza.isEmpty()) {
+	public ResponseEntity<PizzaDTO> findById(@PathVariable int idPizza) {
+		if(!this.pizzaService.existsPizza(idPizza)) {
 			return ResponseEntity.notFound().build();
 		}
 		
-		return ResponseEntity.ok(pizza.get());
+		return ResponseEntity.ok(this.pizzaService.findById(idPizza));
 	}
 	
 	@PostMapping

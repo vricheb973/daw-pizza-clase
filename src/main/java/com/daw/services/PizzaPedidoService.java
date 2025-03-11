@@ -7,7 +7,7 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.daw.persistence.entities.Pedido;
+import com.daw.persistence.entities.Oferta;
 import com.daw.persistence.entities.Pizza;
 import com.daw.persistence.entities.PizzaPedido;
 import com.daw.persistence.repositories.PizzaPedidoRepository;
@@ -23,6 +23,9 @@ public class PizzaPedidoService {
 	
 	@Autowired
 	private PizzaService pizzaService;
+
+	@Autowired
+	private OfertaService ofertaService;
 
 	//CRUDs simples
 	public List<PizzaPedido> findAll(){
@@ -78,8 +81,13 @@ public class PizzaPedidoService {
 	public PizzaPedidoOutputDTO save(PizzaPedidoInputDTO inputDTO) {
 		PizzaPedido entity = PizzaPedidoMapper.toEntity(inputDTO);
 		
-		Pizza pizza = this.pizzaService.findById(entity.getIdPizza()).get();
+		Pizza pizza = this.pizzaService.findEntityById(entity.getIdPizza()).get();
 		entity.setPrecio(entity.getCantidad() * pizza.getPrecio());
+		
+		Optional<Oferta> oferta = this.ofertaService.findActivaByIdPizza(inputDTO.getIdPizza());
+		if(oferta.isPresent()) {
+			entity.setPrecio(entity.getPrecio() * (1 - oferta.get().getDescuento()));
+		}
 		
 		entity = this.pizzaPedidoRepository.save(entity);
 		

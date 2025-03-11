@@ -8,6 +8,8 @@ import org.springframework.stereotype.Service;
 
 import com.daw.persistence.entities.Pizza;
 import com.daw.persistence.repositories.PizzaRepository;
+import com.daw.services.dtos.PizzaDTO;
+import com.daw.services.mappers.PizzaMapper;
 
 @Service
 public class PizzaService {
@@ -23,8 +25,12 @@ public class PizzaService {
 		return this.pizzaRepository.existsById(idPizza);
 	}
 	
-	public Optional<Pizza> findById(int idPizza) {
+	public Optional<Pizza> findEntityById(int idPizza) {
 		return this.pizzaRepository.findById(idPizza);
+	}
+	
+	public PizzaDTO findById(int idPizza) {
+		return PizzaMapper.toDto(this.pizzaRepository.findById(idPizza).get());
 	}
 	
 	public Pizza create(Pizza pizza) {
